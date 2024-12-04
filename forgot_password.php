@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
         $updateToken->execute([$token, $token_expiration, $email]);
 
         // Create reset link
-        $resetLink = "http://localhost//groupon/reset_password.php?token=$token"; // Ensure this matches your local dev URL
+        $resetLink = "http://localhost//GroupOn-Produce/reset_password.php?token=$token"; // Ensure this matches your local dev URL
 
         // Send reset email using PHPMailer
         $mail = new PHPMailer(true);

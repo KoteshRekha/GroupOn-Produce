@@ -10,19 +10,20 @@ if (isset($_POST['submit'])) {
     $pass = $_POST['pass'];
     $pass = filter_var($pass, FILTER_SANITIZE_STRING); // Sanitize password input
 
-    $sql = "SELECT * FROM `users` WHERE email = ?";
-    $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
     $stmt->execute([$email]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($row) {
         if (password_verify($pass, $row['password'])) { // Verifying the password
-            if ($row['user_type'] == 'admin') {
+            if ($row['user_type'] === 'admin') {
                 $_SESSION['admin_id'] = $row['id'];
-                header('location:admin_page.php');
-            } elseif ($row['user_type'] == 'user') {
+                header('Location: admin_page.php');
+                exit;
+            } elseif ($row['user_type'] === 'user') {
                 $_SESSION['user_id'] = $row['id'];
-                header('location:home.php');
+                header('Location: home.php');
+                exit;
             }
         } else {
             $message[] = 'Incorrect email or password!';
@@ -47,23 +48,19 @@ if (isset($_POST['submit'])) {
 
    <!-- Custom CSS -->
    <link rel="stylesheet" href="css/components.css">
-
 </head>
 <body>
 
 <?php
-
 if (isset($message)) {
    foreach ($message as $msg) {
       echo '
       <div class="message">
          <span>' . $msg . '</span>
          <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-      </div>
-      ';
+      </div>';
    }
 }
-
 ?>
 
 <section class="form-container">
