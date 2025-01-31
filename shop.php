@@ -82,10 +82,12 @@ if(isset($_POST['add_to_cart'])){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>home page</title>
+   <title>shop</title>
 
+   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
+   <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -93,54 +95,12 @@ if(isset($_POST['add_to_cart'])){
    
 <?php include 'header.php'; ?>
 
-<div class="home-bg">
+<section class="p-category">
 
-   <section class="home">
-
-      <div class="content">
-         <span>don't panic, go organic</span>
-         <h3>Reach For A Healthier You With Organic Foods</h3>
-         <a href="about.php" class="btn">about us</a>
-      </div>
-
-   </section>
-
-</div>
-
-<section class="home-category">
-
-   <h1 class="title">shop by category</h1>
-
-   <div class="box-container">
-
-      <div class="box">
-         <img src="images/cat-1.png" alt="">
-         <h3>fruits</h3>
-         <a href="category.php?category=fruits" class="btn">fruits</a>
-      </div>
-
-      <div class="box">
-         <img src="images/cat-2.png" alt="">
-         <h3>Dairy</h3>
-
-         <a href="category.php?category=meat" class="btn">Dairy</a>
-      </div>
-
-      <div class="box">
-         <img src="images/cat-3.png" alt="">
-         <h3>vegetables</h3>
- 
-         <a href="category.php?category=vegitables" class="btn">vegetables</a>
-      </div>
-
-      <div class="box">
-         <img src="images/cat-4.png" alt="">
-         <h3>Other</h3>
-    
-         <a href="category.php?category=fish" class="btn">Other</a>
-      </div>
-
-   </div>
+   <a href="category.php?category=fruits">fruits</a>
+   <a href="category.php?category=vegitables">vegitables</a>
+   <a href="category.php?category=fish">fish</a>
+   <a href="category.php?category=meat">meat</a>
 
 </section>
 
@@ -151,8 +111,8 @@ if(isset($_POST['add_to_cart'])){
    <div class="box-container">
 
    <?php
-      $select_products = $conn->prepare("SELECT * FROM `products` LIMIT 6");
-      // $select_products->execute();
+      $select_products = $conn->prepare("SELECT * FROM `products`");
+      $select_products->execute();
       if($select_products->rowCount() > 0){
          while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){ 
    ?>
@@ -179,6 +139,11 @@ if(isset($_POST['add_to_cart'])){
    </div>
 
 </section>
+
+
+
+
+
 
 
 
