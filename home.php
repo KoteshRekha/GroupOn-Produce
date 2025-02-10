@@ -120,8 +120,8 @@ if(isset($_POST['add_to_cart'])){
       </div>
 
       <div class="box">
-         <!-- <img src="images/cat-2.png" alt=""> -->
-         <h3>Dairy</h3>
+         <img src="images/cat-2.png" alt="">
+         <h3>meat</h3>
 
          <a href="category.php?category=meat" class="btn">Dairy</a>
       </div>
@@ -134,8 +134,8 @@ if(isset($_POST['add_to_cart'])){
       </div>
 
       <div class="box">
-         <!-- <img src="images/cat-4.png" alt=""> -->
-         <h3>Other</h3>
+         <img src="images/cat-4.png" alt="">
+         <h3>fish</h3>
     
          <a href="category.php?category=fish" class="btn">Other</a>
       </div>
@@ -188,3 +188,4 @@ if(isset($_POST['add_to_cart'])){
 
 </body>
 </html>
+// This code is a PHP-based eCommerce homepage that includes product display, and allows users to add items to their wishlist or shopping cart. It starts by checking if a user is logged in using a session. If not, the user is redirected to the login page. The code allows products to be added to the wishlist or cart by checking if they already exist in either, preventing duplicates. If a product is already in the cart, it cannot be added again, and if it’s in the wishlist, it gets removed before being added to the cart. The homepage displays product categories such as Fruits, Dairy, Vegetables, and Others, with links to more detailed pages. It also shows the latest products from the database, including their price, image, and quantity selector. Users can add products to their wishlist or cart directly from the homepage. The page uses a combination of HTML for structure, PHP for server-side logic, and MySQL for database interactions. Improvements include fixing category URLs and ensuring proper database queries are executed.
