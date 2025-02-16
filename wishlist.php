@@ -1,10 +1,14 @@
 <?php
 
+
 @include 'config.php';
+
 
 session_start();
 
+
 $user_id = $_SESSION['user_id'];
+
 
 if(!isset($user_id)){
    header('location:login.php');
@@ -80,6 +84,7 @@ if(isset($_GET['delete_all'])){
 
 </head>
 <body>
+
    
 <?php include 'header.php'; ?>
 
@@ -118,9 +123,10 @@ if(isset($_GET['delete_all'])){
    ?>
    </div>
 
+   
    <div class="wishlist-total">
       <p>grand total : <span>$<?= $grand_total; ?>/-</span></p>
-      <a href="shop.php" class="option-btn">continue shopping</a>
+      <a href="shop.php" class="option-btn">Continue Shopping</a>
       <a href="wishlist.php?delete_all" class="delete-btn <?= ($grand_total > 1)?'':'disabled'; ?>">delete all</a>
    </div>
 
@@ -130,6 +136,7 @@ if(isset($_GET['delete_all'])){
 
 
 
+   
 
 
 
