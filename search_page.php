@@ -82,10 +82,12 @@ if(isset($_POST['add_to_cart'])){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>home page</title>
+   <title>search page</title>
 
+   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
+   <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -93,66 +95,31 @@ if(isset($_POST['add_to_cart'])){
    
 <?php include 'header.php'; ?>
 
-<div class="home-bg">
+<section class="search-form">
 
-   <section class="home">
-
-      <div class="content">
-         <span>don't panic, go organic</span>
-         <h3>Reach For A Healthier You With Organic Foods</h3>
-         <a href="about.php" class="btn">about us</a>
-      </div>
-
-   </section>
-
-</div>
-
-<section class="home-category">
-
-   <h1 class="title">shop by category</h1>
-
-   <div class="box-container">
-
-      <div class="box">
-         <img src="images/cat-1.png" alt="">
-         <h3>fruits</h3>
-         <a href="category.php?category=fruits" class="btn">fruits</a>
-      </div>
-
-      <div class="box">
-         <img src="images/cat-2.png" alt="">
-         <h3>Dairy</h3>
-
-         <a href="category.php?category=meat" class="btn">Dairy</a>
-      </div>
-
-      <div class="box">
-         <img src="images/cat-3.png" alt="">
-         <h3>vegetables</h3>
- 
-         <a href="category.php?category=vegitables" class="btn">vegetables</a>
-      </div>
-
-      <div class="box">
-         <img src="images/cat-4.png" alt="">
-         <h3>other</h3>
-    
-         <a href="category.php?category=fish" class="btn">Other</a>
-      </div>
-
-   </div>
+   <form action="" method="POST">
+      <input type="text" class="box" name="search_box" placeholder="search products...">
+      <input type="submit" name="search_btn" value="search" class="btn">
+   </form>
 
 </section>
 
-<section class="products">
+<?php
 
-   <h1 class="title">latest products</h1>
+
+
+?>
+
+<section class="products" style="padding-top: 0; min-height:100vh;">
 
    <div class="box-container">
 
    <?php
-      $select_products = $conn->prepare("SELECT * FROM `products` LIMIT 6");
-      // $select_products->execute();
+      if(isset($_POST['search_btn'])){
+      $search_box = $_POST['search_box'];
+      $search_box = filter_var($search_box, FILTER_SANITIZE_STRING);
+      $select_products = $conn->prepare("SELECT * FROM `products` WHERE name LIKE '%{$search_box}%' OR category LIKE '%{$search_box}%'");
+      $select_products->execute();
       if($select_products->rowCount() > 0){
          while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){ 
    ?>
@@ -170,15 +137,20 @@ if(isset($_POST['add_to_cart'])){
       <input type="submit" value="add to cart" class="btn" name="add_to_cart">
    </form>
    <?php
+         }
+      }else{
+         echo '<p class="empty">no result found!</p>';
       }
-   }else{
-      echo '<p class="empty">no products added yet!</p>';
-   }
+      
+   };
    ?>
 
    </div>
 
 </section>
+
+
+
 
 
 
@@ -188,4 +160,3 @@ if(isset($_POST['add_to_cart'])){
 
 </body>
 </html>
-// This code is a PHP-based eCommerce homepage that includes product display, and allows users to add items to their wishlist or shopping cart. It starts by checking if a user is logged in using a session. If not, the user is redirected to the login page. The code allows products to be added to the wishlist or cart by checking if they already exist in either, preventing duplicates. If a product is already in the cart, it cannot be added again, and if it’s in the wishlist, it gets removed before being added to the cart. The homepage displays product categories such as Fruits, Dairy, Vegetables, and Others, with links to more detailed pages. It also shows the latest products from the database, including their price, image, and quantity selector. Users can add products to their wishlist or cart directly from the homepage. The page uses a combination of HTML for structure, PHP for server-side logic, and MySQL for database interactions. Improvements include fixing category URLs and ensuring proper database queries are executed.
