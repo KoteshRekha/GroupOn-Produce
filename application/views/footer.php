@@ -97,7 +97,7 @@
 <!-- Chat Window -->
 <div id="chatWindow" class="chat-window" style="display: none;">
   <div class="chat-header">
-    <span>Select User to Chat</span>
+    <span id="selectedUserName">Select User to Chat</span>
     <button id="closeChatBtn" class="close-btn">&times;</button>
   </div>
 
@@ -189,12 +189,15 @@ function sendChatMessage() {
 
 // Function to render the user list dynamically
 function renderUserList(users) {
+    // Sort users: Move those with unread messages to the top
+    users.sort((a, b) => b.unread_count - a.unread_count);
+
     let userListHtml = "";
     users.forEach(u => {
         let fullName = u.first_name + " " + u.last_name;
         let badge = (u.unread_count > 0) ? `<span class="unread-badge">${u.unread_count}</span>` : '';
         userListHtml += `
-            <div class="chat-user-item" data-id="${u.id}">
+            <div class="chat-user-item" data-id="${u.id}" data-name="${fullName}">
                 ${fullName} ${badge}
             </div>
         `;
@@ -202,12 +205,36 @@ function renderUserList(users) {
 
     $("#chatUserList").html(userListHtml);
 }
+
+function updateUserList() {
+    $.ajax({
+        url: "<?= base_url('chat/fetch_users'); ?>",  
+        type: "GET",
+        dataType: "json",
+        success: function(users) {
+            renderUserList(users);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching user list:", error);
+        }
+    });
+}
+
+// Run the function every second to update user list with new messages count
+setInterval(updateUserList, 1000);
+//setInterval(fetchMessages, 1000);
+
   // Listen for user clicks on the user list
   $(document).on("click", ".chat-user-item", function() {
     selectedUserId = $(this).data("id");
+    let selectedUserName = $(this).data("name"); 
+
     // Enable message input
     $("#chatMessageInput").prop("disabled", false);
     $("#sendChatBtn").prop("disabled", false);
+  $("#selectedUserName").text(selectedUserName);
+      $("#chatMessages").html(""); // Clear previous messages before loading new ones
+    lastMessageId = null; // Reset message tracking
 
     // Load messages with selected user
     fetchMessages(selectedUserId);
@@ -215,34 +242,49 @@ function renderUserList(users) {
   var currentUserId = "<?= $this->session->userdata('user_id') 
         ? $this->session->userdata('user_id') 
         : 'null'; ?>";  // Example: fetch messages for selected user
-  function fetchMessages(userId) {
+let lastMessageId = null; // Track the last loaded message ID
+
+function fetchMessages(userId) {
+   //  lastMessageId = null; // Reset last message ID when switching users
+   // $("#chatMessages").html(""); // Clear old messages
+
     $.ajax({
         url: "<?= base_url('chat/fetch_messages'); ?>",
         type: "POST",
         dataType: "json",
         data: { otherUserId: userId },
         success: function(messages) {
-            $("#chatMessages").empty(); // Clear existing messages
+            if (messages.length === 0) return;
 
-            if (messages.length === 0) {
-                $("#chatMessages").html('<div class="no-messages">No messages found</div>');
-            } else {
-                messages.forEach(msg => {
+            let chatBox = $("#chatMessages");
+            let isScrolledToBottom = chatBox.scrollTop() + chatBox.innerHeight() >= chatBox[0].scrollHeight;
+
+            messages.forEach(msg => {
+                if (msg.id > lastMessageId) { // Only append new messages
                     let fromId = msg.from_user_id;
-                    let who = (fromId == currentUserId) ? "Me" : "Them";
+                    let isMe = fromId == currentUserId;
+                    let senderName = isMe ? "Me" : msg.first_name + " " + msg.last_name;
+                    let alignmentClass = isMe ? "message-sent" : "message-received";
+
                     let msgHtml = `
-                        <div class="chat-message">
-                            <span class="chat-who">${who}:</span>
+                        <div class="chat-message ${alignmentClass}" data-msg-id="${msg.id}">
+                            <span class="chat-who">${senderName}:</span>
                             <span class="chat-text">${msg.message}</span>
                             <span class="chat-time">(${msg.created_at})</span>
                         </div>
                     `;
-                    $("#chatMessages").append(msgHtml);
-                });
-            }
 
-            // Auto-scroll to bottom
-            $(".chat-messages").scrollTop($(".chat-messages")[0].scrollHeight);
+                    chatBox.append(msgHtml);
+                    lastMessageId = msg.id; // Update last message ID
+
+                    
+                }
+            });
+
+            // Auto-scroll only if user was at the bottom
+            if (isScrolledToBottom) {
+                chatBox.scrollTop(chatBox[0].scrollHeight);
+            }
         },
         error: function(xhr, status, error) {
             console.error("Error fetching messages:", error);
@@ -250,6 +292,28 @@ function renderUserList(users) {
     });
 }
 
+function moveUserToTop(userId, userName) {
+    let userItem = $(".chat-user-item[data-id='" + userId + "']");
+
+    // If the user exists in the list, move it to the top
+    if (userItem.length) {
+        $("#chatUserList").prepend(userItem);
+    } else {
+        // If user is not in the list, add them dynamically (optional)
+        let newUserHtml = `<div class="chat-user-item" data-id="${userId}" data-name="${userName}">${userName}</div>`;
+        $("#chatUserList").prepend(newUserHtml);
+    }
+}
+
+
+function autoRefreshMessages() {
+    if (selectedUserId) { // Ensure a user is selected
+        fetchMessages(selectedUserId);
+    }
+}
+
+// Refresh messages every 1 second
+setInterval(autoRefreshMessages, 1000);
 
   // Example: send message function
   function sendMessage(userId, message) {
@@ -362,6 +426,8 @@ function renderUserList(users) {
     flex: 1;
     display: flex;
     flex-direction: column;
+    height:340px;
+    overflow:auto;
   }
   .chat-messages {
     flex: 1;
@@ -401,6 +467,52 @@ function renderUserList(users) {
   #sendChatBtn:hover {
     background: #0056b3;
   }
+
+  .chat-message {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    padding: 8px 12px;
+    margin: 8px;
+    border-radius: 10px;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+/* Sent messages (Me) - Align to right */
+.message-sent {
+    align-self: flex-end;  /* Aligns right */
+    background-color: #dcf8c6; /* Light green */
+    text-align: right;
+    margin-left: auto; /* Pushes it to the right */
+    border-top-right-radius: 0;
+}
+
+/* Received messages (Other user) - Align to left */
+.message-received {
+    align-self: flex-start;  /* Aligns left */
+    background-color: #f1f1f1; /* Light gray */
+    text-align: left;
+    margin-right: auto; /* Pushes it to the left */
+    border-top-left-radius: 0;
+}
+
+/* User name in the message */
+.chat-who {
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+/* Timestamp styling */
+.chat-time {
+    font-size: 10px;
+    color: gray;
+    margin-top: 4px;
+    align-self: flex-end;
+}
+
+
 </style>
 
     <!-- End copyright  -->
@@ -609,11 +721,9 @@ function renderUserList(users) {
 
 
 $(document).ready(function(){
-
          $("#side-menu").click(function () {
-            let cartList = $("#cart_list");
-    cartList.empty(); // Clear existing cart items
-
+         let cartList = $("#cart_list");
+         cartList.empty(); // Clear existing cart items
  $.ajax({
     url: "<?= base_url('cart/getCartitems'); ?>",
     type: "GET",
@@ -623,13 +733,11 @@ $(document).ready(function(){
 
         // Convert object to array
         cartItems = Object.values(cartItems);
-
         let cartList = $("#cart_list");
         cartList.empty(); // Clear old items
         let totalPrice = 0;
-
         cartItems.forEach((item) => {
-            totalPrice += item.price * item.quantity;
+        totalPrice += item.price * item.quantity;
 
             let cartItem = `
             <li>
@@ -654,7 +762,7 @@ $(document).ready(function(){
         console.error("AJAX Error:", error, xhr.responseText);
     }
    });
-           });
+  });
        
     $("#authDropdown").change(function(){
         var selectedValue = $(this).val();
