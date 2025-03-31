@@ -67,7 +67,7 @@
     <?php endforeach; ?>
     </ul>
 <?php else: ?>
-    <p>No results found.</p>
+    <p>No Results Found</p>
 <?php endif; ?>
 
    </div>
