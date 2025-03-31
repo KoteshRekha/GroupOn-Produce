@@ -16,7 +16,7 @@
        
         <input type="Password" class="form-control" placeholder="Confirm Password:" name="confirm_password" id="confirm_password" required>    
         </div>
-        <button type="submit">Update Password</button>
+        <button type="Submit">Update Password</button>
     </form>
 </div>
 </div>
