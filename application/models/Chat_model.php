@@ -9,12 +9,21 @@ class Chat_model extends CI_Model {
     }
 
     // Fetch messages between two users (farmer <-> customer)
-    public function get_messages($userId, $otherUserId) {
-        $this->db->where("(from_user_id = $userId AND to_user_id = $otherUserId) 
-                           OR (from_user_id = $otherUserId AND to_user_id = $userId)");
-        $this->db->order_by('created_at', 'ASC');
-        return $this->db->get('messages')->result();
+public function get_messages($userId, $otherUserId, $lastMessageId = 0) {
+    $this->db->select('messages.*, users.first_name, users.last_name');
+    $this->db->from('messages');
+    $this->db->join('users', 'users.id = messages.from_user_id'); // Join with users table
+    $this->db->where("(from_user_id = $userId AND to_user_id = $otherUserId) 
+                      OR (from_user_id = $otherUserId AND to_user_id = $userId)");
+    if ($lastMessageId > 0) {
+        $this->db->where("messages.id >", $lastMessageId); // Fetch only new messages
     }
+    $this->db->order_by('messages.created_at', 'ASC');
+    
+    return $this->db->get()->result();
+}
+
+    
 
     // Insert a new message
    public function insert_message($fromUserId, $toUserId, $message) {
