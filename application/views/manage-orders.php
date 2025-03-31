@@ -15,6 +15,8 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
+    
 <?php endif; ?>
 
 <?php if ($this->session->flashdata('error')): ?>
