@@ -14,8 +14,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Welcome To <br> Groupon Produce</strong></h1>
-                            <p class="m-b-40">Customer Satisfaction is Our first Priority</p>
-                            <p><a class="btn hvr-hover" href="<?php echo base_url(); ?>shop">Shop New</a></p>
+                            <p class="m-b-40">Customer Satisfaction is Our First Priority</p>
+                            <p><a class="btn hvr-hover" href="<?php echo base_url(); ?>shop">Shop Now</a></p>
                         </div>
                     </div>
                 </div>
@@ -26,8 +26,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Welcome To <br> Groupon Produce</strong></h1>
-                            <p class="m-b-40">Customer Satisfaction is Our first Priority</p>
-                            <p><a class="btn hvr-hover" href="<?php echo base_url(); ?>shop">Shop New</a></p>
+                            <p class="m-b-40">Customer Satisfaction is Our First Priority</p>
+                            <p><a class="btn hvr-hover" href="<?php echo base_url(); ?>shop">Shop Now</a></p>
                         </div>
                     </div>
                 </div>
@@ -38,8 +38,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Welcome To <br> Groupon Produce</strong></h1>
-                            <p class="m-b-40">Customer Satisfaction is Our first Priority</p>
-                            <p><a class="btn hvr-hover" href="<?php echo base_url(); ?>shop">Shop New</a></p>
+                            <p class="m-b-40">Customer Satisfaction is Our First Priority</p>
+                            <p><a class="btn hvr-hover" href="<?php echo base_url(); ?>shop">Shop Now</a></p>
                         </div>
                     </div>
                 </div>
