@@ -144,8 +144,6 @@ public function get_farmer_total_messages($farmer_id) {
     return $this->db->count_all_results();
 }
 
-
-
 public function get_total_messages()
 {
     $this->db->from('messages');
