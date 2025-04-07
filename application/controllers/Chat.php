@@ -57,6 +57,7 @@ class Chat extends CI_Controller {
     // Suppose we get all users except the current user
     $currentUserId = $this->session->userdata('user_id');
     $users = $this->User_model->get_all_users_except($currentUserId);
+	
 
 $this->load->model('Chat_model');
     foreach ($users as &$u) {
