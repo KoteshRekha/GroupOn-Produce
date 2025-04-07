@@ -22,9 +22,6 @@ public function get_messages($userId, $otherUserId, $lastMessageId = 0) {
     
     return $this->db->get()->result();
 }
-
-    
-
     // Insert a new message
    public function insert_message($fromUserId, $toUserId, $message) {
     $data = [
@@ -47,6 +44,4 @@ public function count_unread_messages($currentUserId, $otherUserId) {
     $this->db->where('is_read', 0);
     return $this->db->count_all_results('messages');
 }
-
-
 }
