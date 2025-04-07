@@ -1,110 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Chat Window</title>
-    <style>
-        #chatBox {
-            width: 400px;
-            height: 300px;
-            border: 1px solid #ccc;
-            overflow-y: scroll;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .message {
-            margin-bottom: 5px;
-        }
-        .message .from {
-            font-weight: bold;
-        }
-        .message .time {
-            font-size: 0.8em;
-            color: #999;
-        }
-        #messageInput {
-            width: 300px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Chat Window</title>
+  <style>
+    #chatBox {
+      width: 400px;
+      height: 300px;
+      border: 1px solid #ccc;
+      overflow-y: scroll;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .message {
+      margin-bottom: 5px;
+    }
+    .message .from {
+      font-weight: bold;
+    }
+    .message .time {
+      font-size: 0.8em;
+      color: #999;
+    }
+    #messageInput {
+      width: 300px;
+    }
+  </style>
 </head>
 <body>
-    <h2>Chat Window</h2>
-    <div id="chatBox"></div>
+  <h2>Chat Window</h2>
+  <div id="chatBox" aria-live="polite" aria-label="Chat messages"></div>
 
-    <input type="text" id="messageInput" placeholder="Type your message..." />
-    <button id="sendBtn">Send</button>
+  <input type="text" id="messageInput" placeholder="Type your message..." aria-label="Message input" />
+  <button id="sendBtn">Send</button>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    var otherUserId = <?= isset($otherUserId) ? $otherUserId : 'null'; ?>;
+  <script>
+    const otherUserId = <?= isset($otherUserId) ? $otherUserId : 'null'; ?>;
 
-    // Fetch messages periodically
-    function fetchMessages() {
-        $.ajax({
-            url: "<?= base_url('chat/fetch_messages'); ?>",
-            type: "POST",
-            dataType: "json",
-            data: { otherUserId: otherUserId },
-            success: function(response) {
-                // Clear chatBox
-                $("#chatBox").empty();
-
-                // Build message HTML
-                $.each(response, function(index, msg) {
-                    let fromId = msg.from_user_id;
-                    let messageText = msg.message;
-                    let createdAt = msg.created_at;
-
-                    let msgHtml = '<div class="message">';
-                    msgHtml += '<span class="from">' + (fromId == otherUserId ? 'Them' : 'Me') + ': </span>';
-                    msgHtml += '<span class="text">' + messageText + '</span>';
-                    msgHtml += ' <span class="time">(' + createdAt + ')</span>';
-                    msgHtml += '</div>';
-
-                    $("#chatBox").append(msgHtml);
-                });
-
-                // Auto-scroll to bottom
-                $("#chatBox").scrollTop($("#chatBox")[0].scrollHeight);
-            }
-        });
+    function escapeHtml(unsafe) {
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
-    // Send message
-    function sendMessage() {
-        let message = $("#messageInput").val();
-        if (message.trim() === "") return;
+    async function fetchMessages() {
+      if (!otherUserId) return;
 
-        $.ajax({
-            url: "<?= base_url('chat/send_message'); ?>",
-            type: "POST",
-            dataType: "json",
-            data: {
-                otherUserId: otherUserId,
-                message: message
-            },
-            success: function(res) {
-                // After sending, fetch messages again
-                fetchMessages();
-                $("#messageInput").val("");
-            }
+      try {
+        const res = await fetch("<?= base_url('chat/fetch_messages'); ?>", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `otherUserId=${encodeURIComponent(otherUserId)}`,
         });
+
+        const messages = await res.json();
+        const chatBox = document.getElementById("chatBox");
+        chatBox.innerHTML = "";
+
+        messages.forEach((msg) => {
+          const from = msg.from_user_id == otherUserId ? "Them" : "Me";
+          const safeText = escapeHtml(msg.message);
+          const createdAt = escapeHtml(msg.created_at);
+
+          const msgHtml = `
+            <div class="message">
+              <span class="from">${from}: </span>
+              <span class="text">${safeText}</span>
+              <span class="time">(${createdAt})</span>
+            </div>`;
+          chatBox.innerHTML += msgHtml;
+        });
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
     }
 
-    $(document).ready(function() {
-        // Initial fetch
-        if (otherUserId) {
-            fetchMessages();
-        }
+    async function sendMessage() {
+      const input = document.getElementById("messageInput");
+      const message = input.value.trim();
+      if (!message) return;
 
-        // Set up "Send" button
-        $("#sendBtn").click(function() {
-            sendMessage();
+      try {
+        await fetch("<?= base_url('chat/send_message'); ?>", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `otherUserId=${encodeURIComponent(otherUserId)}&message=${encodeURIComponent(message)}`,
         });
 
-        // Poll for new messages every 5 seconds
-        setInterval(fetchMessages, 5000);
+        input.value = "";
+        fetchMessages();
+      } catch (error) {
+        console.error("Error sending message:", error);
+      }
+    }
+
+    document.getElementById("sendBtn").addEventListener("click", sendMessage);
+
+    document.getElementById("messageInput").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
     });
-    </script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if (otherUserId) {
+        fetchMessages();
+        setInterval(fetchMessages, 5000);
+      }
+    });
+  </script>
 </body>
 </html>
