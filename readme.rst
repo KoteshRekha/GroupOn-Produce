@@ -1,7 +1,10 @@
 ###################
  GROUP ON PRODUCE
+###################
 
 Connecting Farmers and Customers Directly for Fresh, Affordable Produce
+
+Customer Satisfaction is our first priority
 
 *********************
 📖 Project Overview
