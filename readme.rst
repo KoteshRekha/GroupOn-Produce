@@ -1,6 +1,5 @@
 ###################
- GroupOn Produce
-###################
+ GROUP ON PRODUCE
 
 Connecting Farmers and Customers Directly for Fresh, Affordable Produce
 
@@ -146,6 +145,11 @@ Sai Vivek Gankidi
 📜 License
 ************
 This project is licensed under the MIT License.
+
+
+
+
+
 
 
 
