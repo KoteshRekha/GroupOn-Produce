@@ -1,14 +1,20 @@
-* GroupOn Produce
+###################
+ GroupOn Produce
+###################
 
 Connecting Farmers and Customers Directly for Fresh, Affordable Produce
 
+*********************
 📖 Project Overview
+*********************
 GroupOn Produce is a web-based platform that connects farmers directly with customers, allowing the sale and purchase of fresh agricultural products.
 Built using a PHP MVC framework (CodeIgniter or similar), it ensures organized, efficient, and scalable development.
 
 This platform supports easy produce listing, secure ordering, profile management, and direct communication between users.
 
+************
 🚀 Features
+************
 👨‍🌾 Farmer Registration & Login
 Farmers can register, log in, and manage their profiles securely.
 
@@ -37,7 +43,9 @@ Customers can see which products are unavailable.
 🔒 Secure Login Sessions
 Proper session handling and security practices are followed.
 
+***************
 🛠️ Tech Stack
+***************
 Frontend: HTML5, CSS3, Bootstrap, JavaScript
 
 Backend: PHP (Framework - CodeIgniter or similar)
@@ -48,10 +56,9 @@ Version Control: Git, GitHub
 
 Package Management: Composer
 
+*********************
 📂 Project Structure
-bash
-Copy
-Edit
+*********************
 GroupOn-Produce/
 ├── application/     # MVC structure (Controllers, Models, Views)
 ├── assets/          # Static files (CSS, JS, Images)
@@ -65,40 +72,41 @@ GroupOn-Produce/
 ├── index.php        # Entry point of the application
 ├── license.txt      # License information
 └── readme.rst       # Project documentation (older version)
-⚙️ Setup Instructions
-Clone the Repository
 
-bash
-Copy
-Edit
+**********************
+⚙️ Setup Instructions
+**********************
+1. Clone the Repository
+
 git clone https://github.com/KoteshRekha/GroupOn-Produce.git
-Install Dependencies
+
+2. Install Dependencies
 
 Navigate to the project directory and install dependencies using Composer:
 
-bash
-Copy
-Edit
 composer install
-Set Up the Database
 
-Create a MySQL database (e.g., groupon_produce).
+3. Set Up the Database
 
-Import the database tables using the provided .sql file (if available).
+-- Create a MySQL database (e.g., groupon_produce).
 
-Update the database configuration:
+-- Import the database tables using the provided .sql file (if available).
 
-Go to application/config/database.php
+-- Update the database configuration:
 
-Set your database hostname, username, password, and database name.
+    -- Go to application/config/database.php
 
-Run the Application
+    -- Set your database hostname, username, password, and database name.
 
-Deploy the project to your local server (XAMPP / WAMP / MAMP).
+4. Run the Application
 
-Access the app via http://localhost/GroupOn-Produce/.
+-- Deploy the project to your local server (XAMPP / WAMP / MAMP).
 
+-- Access the app via http://localhost/GroupOn-Produce/.
+
+**********************************
 ✨ Future Enhancements (Optional)
+**********************************
 Integrate payment gateway for direct transactions.
 
 Add customer reviews and ratings for farmers/products.
@@ -109,7 +117,9 @@ Implement admin dashboard for managing users and orders.
 
 Develop a mobile-first responsive design.
 
+*****************
 👩‍💻 Contributors
+*****************
 Kotesh Rekha
 
 Siva Pavan Kumar Chava
@@ -120,7 +130,9 @@ Aarjap Piya
 
 Sai Vivek Gankidi
 
+************
 📜 License
+************
 This project is licensed under the MIT License.
 
 
