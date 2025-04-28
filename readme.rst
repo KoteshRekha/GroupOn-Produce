@@ -1,4 +1,5 @@
-🛒 GroupOn Produce
+# GroupOn Produce
+
 Connecting Farmers and Customers Directly for Fresh, Affordable Produce
 
 📖 Project Overview
