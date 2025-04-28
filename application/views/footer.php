@@ -70,7 +70,7 @@
                                     <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">+1-888 705 770</a></p>
                                 </li>
                                 <li>
-                                    <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                                    <p><i class="fas fa-envelope"></i>Email: <a href="mailto:sivapavankumar0209@gmail.com">sivapavankumar0209@gmail.com</a></p>
                                 </li>
                             </ul>
                         </div>

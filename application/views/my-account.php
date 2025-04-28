@@ -5,7 +5,6 @@
         color: #fff;
     }
   
-  
 </style>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-4">
     <h2>Welcome, <?php echo $this->session->userdata('first_name').' '.$this->session->userdata('last_name'); ?></h2>

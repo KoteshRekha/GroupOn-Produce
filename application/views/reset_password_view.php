@@ -9,14 +9,14 @@
     <form action="<?= base_url('auth/process_reset_password'); ?>" method="post">
         <input type="hidden" name="token" value="<?= $token; ?>">        
         <div class="form-group">
-        <input type="Password" class="form-control" placeholder="New Password:" name="new_password" id="new_password" required>       
+        <input type="password" class="form-control" placeholder="New Password:" name="new_password" id="new_password" required>       
         </div>
 
  <div class="form-group">
        
-        <input type="Password" class="form-control" placeholder="Confirm Password:" name="confirm_password" id="confirm_password" required>    
+        <input type="password" class="form-control" placeholder="Confirm Password:" name="confirm_password" id="confirm_password" required>    
         </div>
-        <button type="Submit">Update Password</button>
+        <button type="submit">Update Password</button>
     </form>
 </div>
 </div>

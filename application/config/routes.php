@@ -60,4 +60,5 @@ $route['product/add'] = 'product/addProduct';
 $route['about'] = 'welcome/about';
 $route['shop'] = 'welcome/gallery';
 $route['contact'] = 'welcome/contact';
+$route['form-process'] = 'welcome/form_process';
 

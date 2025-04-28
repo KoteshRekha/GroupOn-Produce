@@ -22,6 +22,9 @@ public function get_messages($userId, $otherUserId, $lastMessageId = 0) {
     
     return $this->db->get()->result();
 }
+
+    
+
     // Insert a new message
    public function insert_message($fromUserId, $toUserId, $message) {
     $data = [
@@ -44,4 +47,14 @@ public function count_unread_messages($currentUserId, $otherUserId) {
     $this->db->where('is_read', 0);
     return $this->db->count_all_results('messages');
 }
+public function get_last_message_time($userA, $userB)
+{
+    $this->db->select_max('created_at'); // or use MAX(timestamp) if it's called that
+    $this->db->where("(from_user_id = $userA AND to_user_id = $userB) OR (from_user_id = $userB AND to_user_id = $userA)", NULL, FALSE);
+    $query = $this->db->get('messages');
+
+    $result = $query->row_array();
+    return $result['created_at'] ?? null;
+}
+
 }

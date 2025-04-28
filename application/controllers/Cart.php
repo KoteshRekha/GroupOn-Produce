@@ -14,6 +14,7 @@ class Cart extends CI_Controller {
         $product_name = $this->input->post('name');
         $product_price = $this->input->post('price');
         $product_image = $this->input->post('image');
+         $stock = $this->input->post('stock');
 
         // Get existing cart from session
         $cart = $this->session->userdata('cart') ? $this->session->userdata('cart') : [];
@@ -27,6 +28,7 @@ class Cart extends CI_Controller {
                 'name' => $product_name,
                 'image' => $product_image,
                 'price' => $product_price,
+                'stock' => $stock,
                 'quantity' => 1
             ];
         }

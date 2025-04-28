@@ -125,6 +125,38 @@ class Welcome extends CI_Controller {
         $this->load->view('contact');
         //$this->load->view('manage-products');
 	}
+	public function form_process()
+{
+    // Load the helper and library
+    $this->load->helper('url');
+    $this->load->library('email');
+
+    // Get POST data
+    $name = $this->input->post('name', true);
+    $email = $this->input->post('email', true);
+    $msg_subject = $this->input->post('msg_subject', true);
+    $message = $this->input->post('message', true);
+
+    // Validate inputs
+    if (empty($name) || empty($email) || empty($msg_subject) || empty($message)) {
+        echo "All fields are required.";
+        return;
+    }
+
+    // Email configuration
+    $this->email->from($email, $name);
+    $this->email->to('chavasivapavankumar0209@gmail.com'); // Replace with your email
+    $this->email->subject($msg_subject);
+    $this->email->message($message);
+
+    // Send email
+    if ($this->email->send()) {
+        echo "success";
+    } else {
+        echo "Error: " . $this->email->print_debugger();
+    }
+}
+
 	public function gallery()
 	{
 		

@@ -33,6 +33,7 @@
                
     <?php if (!empty($cart_items)): ?>
         <?php foreach ($cart_items as $item): ?>
+
             <tr data-id="<?= $item['id']; ?>">
                  <td class="thumbnail-img">
                                         <a href="#">
@@ -41,7 +42,14 @@
                                     </td>
                 <td class="name-pr"><?= $item['name']; ?></td>
                 <td class="price-pr">$<?= number_format($item['price'], 2); ?></td>
-                <td class="quantity-box"><input type="number" size="4" value="<?= $item['quantity']; ?>" min="1" step="1" class="c-input-text qty text"></td>
+                <td class="quantity-box"><input type="number"
+       size="4"
+       value="<?= $item['quantity']; ?>"
+       min="1"
+       max="<?= $item['stock']; ?>"
+       step="1"
+       class="c-input-text qty text"
+       data-stock="<?= $item['stock']; ?>"></td>
                 <td class="total-pr">$<?= number_format($item['price'] * $item['quantity'], 2); ?></td>
                  <td class="remove-pr ">
                          <button class="btn btn-danger remove-item" data-id="<?= $item['id']; ?>">Remove</button>
@@ -95,7 +103,8 @@
                         </div>
                         <hr> </div>
                 </div>
-                <div class="col-12 d-flex shopping-box"><a href="<?php echo base_url();?>cart/checkout" class="ml-auto btn hvr-hover">Checkout</a> </div>
+                <div class="col-12 d-flex shopping-box">  <a href="javascript:void(0);" id="checkoutBtn" class="ml-auto btn hvr-hover">Checkout</a>
+ </div>
             </div>
 
         </div>

@@ -25,7 +25,8 @@ class Auth extends CI_Controller {
         'regex_match' => 'The {field} field must be a valid numeric phone number (up to 10 digits).'
     ]
 );
-        $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
+       $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]|max_length[20]|regex_match[/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/]');
+
         $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[password]');
         $this->form_validation->set_rules('address', 'Address', 'required');
         $this->form_validation->set_rules('state', 'State', 'required');
@@ -180,7 +181,7 @@ public function process_forgot_password() {
             $this->User_model->update_password_and_clear_token($user->id, $hashedPassword);
 
             $this->session->set_flashdata('success', 'Password updated successfully! You can now log in.');
-            redirect('welcome_message');
+            redirect(base_url());
         }
     }
 }

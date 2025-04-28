@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="subject" name="name" placeholder="Subject" required data-error="Please enter your Subject">
+                                        <input type="text" class="form-control" id="msg_subject" name="name" placeholder="Subject" required data-error="Please enter your Subject">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                 <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">+1-888 705 770</a></p>
                             </li>
                             <li>
-                                <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                                <p><i class="fas fa-envelope"></i>Email: <a href="mailto:chavasivapavankumar0209@gmail.com">chavasivapavankumar0209@gmail.com</a></p>
                             </li>
                         </ul>
                     </div>
