@@ -63,29 +63,29 @@ Package Management: Composer
 *********************
 GroupOn-Produce/
 
-├── application/     # MVC structure (Controllers, Models, Views)
+├── application/                # MVC structure (Controllers, Models, Views)
 
-├── assets/          # Static files (CSS, JS, Images)
+├── assets/                     # Static files (CSS, JS, Images)
 
-├── system/          # Framework core files
+├── system/                     # Framework core files
 
-├── vendor/          # Composer dependencies
+├── vendor/                     # Composer dependencies
 
-├── .editorconfig    # Editor configurations
+├── .editorconfig               # Editor configurations
 
-├── .gitignore       # Git ignore file
+├── .gitignore                  # Git ignore file
 
-├── .htaccess        # Apache server configurations
+├── .htaccess                   # Apache server configurations
 
-├── composer.json    # Composer package file
+├── composer.json               # Composer package file
 
-├── composer.lock    # Composer lock file
+├── composer.lock               # Composer lock file
 
-├── index.php        # Entry point of the application
+├── index.php                   # Entry point of the application
 
-├── license.txt      # License information
+├── license.txt                 # License information
 
-└── readme.rst       # Project documentation (older version)
+└── readme.rst                  # Project documentation (older version)
 
 **********************
 ⚙️ Setup Instructions
