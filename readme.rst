@@ -1,3 +1,134 @@
+🛒 GroupOn Produce
+Connecting Farmers and Customers Directly for Fresh, Affordable Produce
+
+📖 Project Overview
+GroupOn Produce is a web-based platform that connects farmers directly with customers, allowing the sale and purchase of fresh agricultural products.
+Built using a PHP MVC framework (CodeIgniter or similar), it ensures organized, efficient, and scalable development.
+
+This platform supports easy produce listing, secure ordering, profile management, and direct communication between users.
+
+🚀 Features
+👨‍🌾 Farmer Registration & Login
+Farmers can register, log in, and manage their profiles securely.
+
+🛍️ Product Listings & Quantity Management
+Farmers can add new produce, update product details, edit available quantity, and mark items out of stock.
+
+🛒 Customer Shopping Cart
+Customers can add products to their shopping cart and place orders seamlessly.
+
+💳 Order Placement & Status Update
+Customers can place orders and track their status (Pending ➔ Shipped ➔ Delivered).
+Farmers have the ability to update order status directly from their panel.
+
+📝 Profile Management
+Both farmers and customers can view and update their personal details and account settings.
+
+📞 Contact Us Form
+Customers can reach out via the Contact Us form for queries or support.
+
+🔐 Forgot Password Feature
+Allows users to recover their accounts securely.
+
+🛑 Out of Stock Indicator
+Customers can see which products are unavailable.
+
+🔒 Secure Login Sessions
+Proper session handling and security practices are followed.
+
+🛠️ Tech Stack
+Frontend: HTML5, CSS3, Bootstrap, JavaScript
+
+Backend: PHP (Framework - CodeIgniter or similar)
+
+Database: MySQL
+
+Version Control: Git, GitHub
+
+Package Management: Composer
+
+📂 Project Structure
+bash
+Copy
+Edit
+GroupOn-Produce/
+├── application/     # MVC structure (Controllers, Models, Views)
+├── assets/          # Static files (CSS, JS, Images)
+├── system/          # Framework core files
+├── vendor/          # Composer dependencies
+├── .editorconfig    # Editor configurations
+├── .gitignore       # Git ignore file
+├── .htaccess        # Apache server configurations
+├── composer.json    # Composer package file
+├── composer.lock    # Composer lock file
+├── index.php        # Entry point of the application
+├── license.txt      # License information
+└── readme.rst       # Project documentation (older version)
+⚙️ Setup Instructions
+Clone the Repository
+
+bash
+Copy
+Edit
+git clone https://github.com/KoteshRekha/GroupOn-Produce.git
+Install Dependencies
+
+Navigate to the project directory and install dependencies using Composer:
+
+bash
+Copy
+Edit
+composer install
+Set Up the Database
+
+Create a MySQL database (e.g., groupon_produce).
+
+Import the database tables using the provided .sql file (if available).
+
+Update the database configuration:
+
+Go to application/config/database.php
+
+Set your database hostname, username, password, and database name.
+
+Run the Application
+
+Deploy the project to your local server (XAMPP / WAMP / MAMP).
+
+Access the app via http://localhost/GroupOn-Produce/.
+
+✨ Future Enhancements (Optional)
+Integrate payment gateway for direct transactions.
+
+Add customer reviews and ratings for farmers/products.
+
+Enable real-time chat with notifications.
+
+Implement admin dashboard for managing users and orders.
+
+Develop a mobile-first responsive design.
+
+👩‍💻 Contributors
+Kotesh Rekha
+
+Siva Pavan Kumar Chava
+
+Sridhar Cheppala
+
+Aarjap Piya
+
+Sai Vivek Gankidi
+
+📜 License
+This project is licensed under the MIT License.
+
+
+
+
+
+
+
+
 ###################
 What is CodeIgniter
 ###################
